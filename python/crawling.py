@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
-from selenium.webdriver.common.keys import Keys
 import datetime as dt
 import pandas as pd
 
@@ -10,8 +9,7 @@ driver = webdriver.Chrome(path)
 
 sd = dt.date(year=2010,month=1,day=1)
 ed = sd
-yesterday = 1480
-last = yesterday
+yesterday = 1883    #2009-12-31 삼겹살 가격
 while(ed != dt.date(year=2020,month=3,day=1)):
     url = f'https://www.kamis.or.kr/customer/price/retail/period.do?action=daily&startday={str(sd)}&endday={str(ed)}&countycode=1101&itemcategorycode=500&itemcode=514&kindcode=&productrankcode=&convert_kg_yn=N'
     driver.get(url)
