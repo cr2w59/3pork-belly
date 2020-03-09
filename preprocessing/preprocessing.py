@@ -13,4 +13,5 @@ df_p = pd.read_csv('./data/price.csv',encoding='utf-8', header=0)
 
 # 최종 데이터
 df = pd.merge(df_w, df_p)
+df['일시']=df['일시'].map(lambda x: x.replace('-',''))
 df.to_csv('./data/data.csv', encoding='utf-8', index=False)
