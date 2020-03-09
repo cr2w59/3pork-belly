@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import numpy as np
+import pandas as pd
 from model import predict
 
 app = Flask(__name__)
@@ -9,23 +9,20 @@ def index():
     if request.method == 'GET':
         return render_template('index.html')
     if request.method == 'POST':
-        # 파라미터를 전달 받습니다.
+        date = float(request.form['date'])
         avg_temp = float(request.form['avg_temp'])
         min_temp = float(request.form['min_temp'])
         max_temp = float(request.form['max_temp'])
         rain_fall = float(request.form['rain_fall'])
-
-        # 배추 가격 변수를 선언합니다.
+        avg_wind = float(request.form['avg_wind'])
+        humidity = float(request.form['humidity'])
         price = 0
 
-        # 입력된 파라미터를 배열 형태로 준비합니다.
-        data = ((avg_temp, min_temp, max_temp, rain_fall), (0, 0, 0, 0))
-        arr = np.array(data, dtype=np.float32)
-
-        # 입력 값을 토대로 예측 값을 찾아냅니다.
-        x_data = arr[0:4]
-        
-        price = predict(x_data)
+        data = {'일시': date, '평균기온(°C)': avg_temp, '최저기온(°C)': min_temp,
+                '최고기온(°C)':max_temp,'일강수량(mm)':rain_fall,
+                '평균 풍속(m/s)':avg_wind,'평균 상대습도(%)':humidity}
+        x = pd.DataFrame(data, columns=['일시','평균기온(°C)','최저기온(°C)','최고기온(°C)','일강수량(mm)','평균 풍속(m/s)','평균 상대습도(%)']) 
+        price = predict(x)
 
         return render_template('index.html', price=price)
 
