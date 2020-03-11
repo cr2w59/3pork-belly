@@ -15,7 +15,7 @@ np.random.seed(SEED)
 tf.set_random_seed(SEED)
 
 # 데이터 로드
-df = pd.read_csv('/content/data.csv', encoding='utf-8', header=0)
+df = pd.read_csv('./data/data.csv', encoding='utf-8', header=0)
 df.일시=df.일시.astype('float64')
 
 # 상관관계 확인
